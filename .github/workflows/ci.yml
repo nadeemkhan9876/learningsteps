@@ -1,0 +1,33 @@
+name: Learningsteps CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install -r api/requirements.txt
+
+      - name: Lint with ruff
+        run: ruff check .
+        continue-on-error: true
+
+      - name: Run pytest
+        run: pytest
+
+      - name: Build Docker image
+        run: docker build -t learningsteps:${{ github.sha }} .
