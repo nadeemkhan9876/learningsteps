@@ -6,7 +6,7 @@ variable "subscription_id" {
 
 variable "prefix" {
   type    = string
-  default = "learningstepsmf"
+  default = "learningstepsnk"
 }
 
 variable "location" {
